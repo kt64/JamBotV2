@@ -12,7 +12,7 @@
 *.log
 
 # Config
-*.yml
+.env
 
 # BlueJ files
 *.ctxt
