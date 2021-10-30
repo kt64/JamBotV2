@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +27,7 @@ public class Main extends ListenerAdapter {
         jdaBuilder = JDABuilder.createDefault(ConfigValues.DISCORD_TOKEN);
 
         jdaBuilder.setStatus(OnlineStatus.IDLE);
-        jdaBuilder.setActivity(Activity.playing("IntelliJ"));
+        jdaBuilder.setActivity(Activity.playing("Words, Words, Words"));
 
         jdaBuilder.addEventListeners(new Main());
 
@@ -46,6 +48,16 @@ public class Main extends ListenerAdapter {
             } else {
                 event.getChannel().sendMessage("You tried to hit up a bot, that can't happen").queue();
             }
+        }
+    }
+
+    @Override
+    public void onGuildUpdateName(@NotNull GuildUpdateNameEvent event) {
+        TextChannel textChannel = event.getGuild().getSystemChannel();
+        if (textChannel != null ) {
+            String newName = event.getNewName();
+            String oldName = event.getOldName();
+            textChannel.sendMessage("The discord name was succesfully changed from **" + oldName + "** to **" + newName + "**!").queue();
         }
     }
 }
