@@ -44,12 +44,12 @@ public class Main extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event){
         String arguments = event.getMessage().getContentRaw();
-        if(arguments.equals("!dylan")) {
+        if(arguments.equals("!embeddedmessage")) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle("Dylan Dungeon Now");
+            embedBuilder.setTitle("Embedded Title");
             embedBuilder.setColor(0x2ecc71);
-            embedBuilder.setDescription(("Get Dylan to the dungeon\nThis is not a drill."));
-            embedBuilder.setFooter("Dylan to dungeon, stat.", event.getAuthor().getAvatarUrl());
+            embedBuilder.setDescription(("This is a description part 1\nThis is a description part 2"));
+            embedBuilder.setFooter("This is the footer", event.getAuthor().getAvatarUrl());
             embedBuilder.setThumbnail(event.getAuthor().getAvatarUrl());
             embedBuilder.setImage(event.getAuthor().getAvatarUrl());
 
