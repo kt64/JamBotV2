@@ -1,5 +1,6 @@
 package com.kt64.jambotv2;
 
+import com.kt64.jambotv2.commands.CommandManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -50,6 +51,7 @@ public class Main extends ListenerAdapter {
         } catch (LoginException exception) {
             exception.printStackTrace();
         }
+        registerCommands();
     }
 
     public static JDA getJda(){
@@ -57,6 +59,11 @@ public class Main extends ListenerAdapter {
             return jda;
         }
         return null;
+    }
+
+    private static void registerCommands(){
+        CommandManager commandManager = new CommandManager();
+        jda.addEventListener(commandManager);
     }
 
     public static AudioPlayerManager playerManager(){
