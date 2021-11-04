@@ -1,5 +1,8 @@
 package com.kt64.jambotv2;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import config.ConfigFile;
 import config.ConfigValues;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -19,20 +22,23 @@ import java.awt.*;
 
 public class Main extends ListenerAdapter {
 
-    private static JDABuilder jdaBuilder;
     private GuildMessageReceivedEvent event;
+    private static AudioPlayerManager playerManager;
 
     public static void main(String[] args) {
 
         ConfigFile.loadConfig();
         ConfigValues.loadValues();
 
-        jdaBuilder = JDABuilder.createDefault(ConfigValues.DISCORD_TOKEN);
+        JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigValues.DISCORD_TOKEN);
 
-        jdaBuilder.setStatus(OnlineStatus.IDLE);
+        jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("Words, Words, Words"));
 
         jdaBuilder.addEventListeners(new Main());
+
+        AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+        AudioSourceManagers.registerRemoteSources(playerManager);
 
         try {
             jdaBuilder.build();
