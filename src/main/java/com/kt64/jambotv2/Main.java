@@ -1,11 +1,13 @@
 package com.kt64.jambotv2;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import config.ConfigFile;
 import config.ConfigValues;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -22,8 +24,10 @@ import java.awt.*;
 
 public class Main extends ListenerAdapter {
 
+    private static JDA jda;
     private GuildMessageReceivedEvent event;
     private static AudioPlayerManager playerManager;
+    private static com.kt64.jambotv2.music.AudioPlayerManager audioPlayerManager;
 
     public static void main(String[] args) {
 
@@ -39,9 +43,10 @@ public class Main extends ListenerAdapter {
 
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
+        audioPlayerManager = new com.kt64.jambotv2.music.AudioPlayerManager();
 
         try {
-            jdaBuilder.build();
+            jda = jdaBuilder.build();
         } catch (LoginException exception) {
             exception.printStackTrace();
         }
@@ -61,6 +66,13 @@ public class Main extends ListenerAdapter {
 
             event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
+    }
+
+    public static JDA getJda(){
+        if(jda != null){
+            return jda;
+        }
+        return null;
     }
 
     public static AudioPlayerManager playerManager(){
