@@ -52,22 +52,6 @@ public class Main extends ListenerAdapter {
         }
     }
 
-    @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event){
-        String arguments = event.getMessage().getContentRaw();
-        if(arguments.equals("!embeddedmessage")) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle("Embedded Title");
-            embedBuilder.setColor(0x2ecc71);
-            embedBuilder.setDescription(("This is a description part 1\nThis is a description part 2"));
-            embedBuilder.setFooter("This is the footer", event.getAuthor().getAvatarUrl());
-            embedBuilder.setThumbnail(event.getAuthor().getAvatarUrl());
-            embedBuilder.setImage(event.getAuthor().getAvatarUrl());
-
-            event.getChannel().sendMessage(embedBuilder.build()).queue();
-        }
-    }
-
     public static JDA getJda(){
         if(jda != null){
             return jda;
