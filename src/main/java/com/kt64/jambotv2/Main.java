@@ -62,4 +62,11 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
+
+    public static AudioPlayerManager playerManager(){
+        if(playerManager != null){
+            return playerManager;
+        }
+        return null;
+    }
 }
